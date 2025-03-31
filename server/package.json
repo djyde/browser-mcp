@@ -1,0 +1,40 @@
+{
+  "name": "@djyde/browser-mcp",
+  "version": "0.0.1",
+  "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "tsup src/cli.ts --watch --format esm",
+    "build": "tsup src/cli.ts --format esm",
+    "prepublish": "npm run build"
+  },
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "browser-mcp": "./dist/cli.js"
+  },
+  "dependencies": {
+    "@extractus/article-extractor": "^8.0.17",
+    "@modelcontextprotocol/sdk": "^1.8.0",
+    "@mozilla/readability": "^0.6.0",
+    "defuddle": "^0.4.0",
+    "jsdom": "^26.0.0",
+    "nanoid": "^5.1.5",
+    "rpc-websockets": "^10.0.0",
+    "tsup": "^8.4.0",
+    "turndown": "^7.2.0",
+    "typescript": "^5.6.3",
+    "ws": "^8.18.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@browser-mcp/shared": "workspace:*",
+    "@types/node": "^22.13.14",
+    "@types/turndown": "^5.0.5",
+    "@types/ws": "^8.18.0"
+  }
+}
