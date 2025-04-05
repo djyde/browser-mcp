@@ -1,10 +1,20 @@
 # browser-mcp
 
+[![smithery badge](https://smithery.ai/badge/@djyde/browser-mcp)](https://smithery.ai/server/@djyde/browser-mcp)
+
 A browser extension and MCP server that allows you to interact with the browser you are using.
 
 ![mcp](https://github.com/user-attachments/assets/8464d4dc-7192-4d89-be05-bdcbaf0b5807)
 
 ![jkXeswNy@2x](https://github.com/user-attachments/assets/18c90714-5ec7-4d9d-ac24-74af1b6c907d)
+
+### Installing via Smithery
+
+To install Browser Extension and MCP Server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@djyde/browser-mcp):
+
+```bash
+npx -y @smithery/cli install @djyde/browser-mcp --client claude
+```
 
 ## Usage
 
