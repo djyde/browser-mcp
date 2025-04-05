@@ -2,6 +2,10 @@
 
 A browser extension and MCP server that allows you to interact with the browser you are using.
 
+![mcp](https://github.com/user-attachments/assets/8464d4dc-7192-4d89-be05-bdcbaf0b5807)
+
+![jkXeswNy@2x](https://github.com/user-attachments/assets/18c90714-5ec7-4d9d-ac24-74af1b6c907d)
+
 ## Usage
 
 ```json
