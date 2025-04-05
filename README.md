@@ -17,6 +17,40 @@ A browser extension and MCP server that allows you to interact with the browser 
 }
 ```
 
+## Tools
+
+All available tools are listed in `server/src/tools.ts`.
+
+### `get_current_page_markdown`
+
+Get the markdown from current browser browsing page.
+
+example:
+
+```
+Summarize the current page.
+```
+
+### `append_style`
+
+Append a css style to the current browser browsing page.
+
+example:
+
+```
+Change the current page to dark mode.
+```
+
+### `history_search`
+
+Search the browser history.
+
+example:
+
+```
+Search the browser history for "github".
+```
+
 ## Build
 
 ```bash
@@ -44,10 +78,23 @@ After building, the extension will be in the `extension/.output` directory.
 
 ```bash
 cd server
+
+# dev
+npm run dev
+
+# build
 npm run build
 ```
 
 `server/dist/cli.js` is the MCP server entry.
+
+## Contributing
+
+### Add a new tool
+
+1. Add the tool schema to the `tools` array in `server/src/tools.ts`.
+2. Add a extension callable handler in `extension/calls.ts`.
+3. Add a tool handler in `server/src/tools.ts`. Use the `call` function to call the extension handler.
 
 ## License
 
