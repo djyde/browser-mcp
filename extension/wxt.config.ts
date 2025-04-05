@@ -1,4 +1,5 @@
 import { defineConfig } from 'wxt';
+import tailwindcss from '@tailwindcss/vite'
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
@@ -10,10 +11,16 @@ export default defineConfig({
     chromiumArgs: ['--user-data-dir=./.wxt/chrome-data'],
   },
   manifest: {
+    name: "Browser MCP",
+    description: "A browser extension and MCP server that allows you to interact with the browser you are using.",
     permissions: [
       "activeTab",
       "scripting",
-      "storage"
+      "storage",
+    ],
+    optional_permissions: [
+      "bookmarks",
+      "history"
     ],
     minimum_chrome_version: '116',
     host_permissions: [
@@ -24,4 +31,10 @@ export default defineConfig({
 
     }
   },
+  // @ts-expect-error
+  vite: () => ({
+    plugins: [
+      tailwindcss(),
+    ]
+  }) 
 });

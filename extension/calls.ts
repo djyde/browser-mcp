@@ -57,5 +57,36 @@ export class CallHandler {
     })
   }
 
-}
+  async [WSMethods.AppendStyle]({ css_string }: { css_string: string }) {
+    const [tab] = await browser.tabs.query({
+      active: true,
+    })
+    try {
+      await browser.scripting.insertCSS({
+        target: {
+          tabId: tab.id!,
+        },
+        css: css_string,
+      })
+      this.sendResponse("Append style successfully")
+    } catch (error) {
+      this.sendError(`Failed to append style: ${error}`)
+    }
+  }
 
+  async [WSMethods.HistorySearch]({ query }: { query: string }) {
+    const checkPermission = await browser.permissions.contains({
+      permissions: ["history"],
+    })
+    if (!checkPermission) {
+      this.sendError("You need to grant history permission to use this feature")
+      return
+    }
+    const history = await browser.history.search({
+      text: query,
+      endTime: Date.now(),
+      startTime: Date.now() - 30 * 24 * 60 * 60 * 1000,
+    })
+    this.sendResponse(history)
+  }
+}

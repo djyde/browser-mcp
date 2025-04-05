@@ -3,20 +3,34 @@ import { WSMethods } from "@browser-mcp/shared";
 import { ConnectStatus, connectStatusStorage } from "../storage";
 import { CallHandler } from "@/calls";
 
-async function makeConnection() {
-  const RETRY_INTERVAL = 5000
-  let webSocket: WebSocket | null = null;
 
-  await connectStatusStorage.setValue(null)
+async function makeConnection() {
+  let webSocket: WebSocket | null = null;
+  const RETRY_INTERVAL = 5000
+
+  await connectStatusStorage.setValue(ConnectStatus.Disconnected)
+
+  browser.runtime.onMessage.addListener((msg: any) => {
+    if (msg.type === "connect") {
+      retryConnect()
+    }
+  })
 
   async function retryConnect() {
-    const retryConnectIntervalId = setInterval(async () => {
+    if (webSocket) {
+      webSocket.close()
+      webSocket = null
+      connectStatusStorage.setValue(ConnectStatus.Disconnected)
+    }
+    const retry = async () => {
       if (webSocket) {
         clearInterval(retryConnectIntervalId)
         return
       }
       connect()
-    }, RETRY_INTERVAL)
+    }
+    retry()
+    const retryConnectIntervalId = setInterval(retry, RETRY_INTERVAL)
 
     return () => {
       clearInterval(retryConnectIntervalId)
@@ -25,6 +39,8 @@ async function makeConnection() {
 
   async function connect() {
     webSocket = new WebSocket('ws://localhost:11223');
+
+    connectStatusStorage.setValue(ConnectStatus.Connecting)
 
     webSocket.onopen = async (event) => {
       await connectStatusStorage.setValue(ConnectStatus.Connected)
@@ -51,7 +67,7 @@ async function makeConnection() {
         if (data.type === "call") {
           const method = data.method as WSMethods
           const callHandler = new CallHandler(webSocket!, requestId!)
-          await callHandler.handle(method, data.params)
+          await callHandler.handle(method, data.args)
         }
       } catch (error) {
         if (requestId) {
