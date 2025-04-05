@@ -51,6 +51,12 @@ example:
 Search the browser history for "github".
 ```
 
+## Roadmap
+
+- [ ] Publish the extension to extension store.
+- [ ] Write documentation.
+- [ ] Add more tools.
+
 ## Build
 
 ```bash
